@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vietnamese Supermarket Vocabulary</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+}
+
+header {
+  background: #27ae60;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-size: 22px;
+}
+
+.section {
+  padding: 10px 20px;
+}
+
+.section h2 {
+  margin-top: 25px;
+  color: #2c3e50;
+}
+
+.items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  cursor: pointer;
+  border: 2px solid #ddd;
+}
+
+.card:hover {
+  background: #eafff0;
+}
+
+#cart {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 260px;
+  height: 100%;
+  background: white;
+  border-left: 2px solid #ddd;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+#cart h3 {
+  margin-top: 0;
+}
+
+#popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+#popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 280px;
+  text-align: center;
+}
+
+button {
+  background: #27ae60;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1e8e4f;
+}
+</style>
+</head>
+
+<body>
+
+<header>🛒 Vietnamese Supermarket Vocabulary</header>
+
+<div class="section" id="store"></div>
+
+<div id="cart">
+  ആത
+  <h3>🧺 Cart</h3>
+  <ul id="cart-list"></ul>
+</div>
+
+<div id="popup">
+  <div id="popup-content">
+    <h3 id="vn"></h3>
+    <p id="en"></p>
+    <button onclick="addToCart()">Add to Cart</button>
+    <br><br>
+    <button onclick="closePopup()">Close</button>
+  </div>
+</div>
+
+<script>
+const data = {
+  "🥬 Rau củ – Produce": [
+    ["Rau", "Vegetables"], ["Cà rốt", "Carrot"], ["Cà chua", "Tomato"],
+    ["Khoai tây", "Potato"], ["Hành", "Onion"], ["Tỏi", "Garlic"], ["Rau xà lách", "Lettuce"]
+  ],
+  "🍎 Trái cây – Fruit": [
+    ["Táo", "Apple"], ["Chuối", "Banana"], ["Cam", "Orange"],
+    ["Nho", "Grapes"], ["Xoài", "Mango"]
+  ],
+  "🍞 Bánh & tinh bột – Bakery": [
+    ["Bánh mì", "Bread"], ["Bánh ngọt", "Cake"], ["Bánh quy", "Cookies"],
+    ["Mì gói", "Instant noodles"], ["Gạo", "Rice"]
+  ],
+  "🥛 Sữa & trứng – Dairy": [
+    ["Sữa", "Milk"], ["Sữa tươi", "Fresh milk"],
+    ["Sữa chua", "Yogurt"], ["Phô mai", "Cheese"], ["Trứng", "Eggs"]
+  ],
+  "🥩 Thịt & cá – Meat & Seafood": [
+    ["Thịt", "Meat"], ["Thịt heo", "Pork"], ["Thịt gà", "Chicken"],
+    ["Thịt bò", "Beef"], ["Cá", "Fish"]
+  ],
+  "🧂 Gia vị – Condiments": [
+    ["Muối", "Salt"], ["Đường", "Sugar"],
+    ["Nước mắm", "Fish sauce"], ["Dầu ăn", "Cooking oil"]
+  ],
+  "🥤 Đồ uống – Drinks": [
+    ["Nước", "Water"], ["Nước ngọt", "Soft drink"],
+    ["Nước cam", "Orange juice"], ["Trà", "Tea"], ["Cà phê", "Coffee"]
+  ]
+};
+
+let selectedItem = null;
+
+const store = document.get
